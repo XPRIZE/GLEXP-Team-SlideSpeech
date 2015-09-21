@@ -101,7 +101,7 @@
     <div>
     <button onclick="playBar()" class="myButton" style="margin-left: 10px;"><i class="fa fa-play"></i></button>
     <button onclick="clearBar()" class="myButton"><i class="fa fa-eject"></i></button>
-    <button onclick="playWord()" class="myButton"><i class="fa fa-search"></i></button>
+    <button onclick="findWords()" class="myButton"><i class="fa fa-search"></i></button>
     </div>
 
 <br style="clear:both">
@@ -873,7 +873,12 @@ function clearBar() {
 
 };
 
-function playWord() {
+function playWord(word) {
+    var msg = new SpeechSynthesisUtterance(word);
+    window.speechSynthesis.speak(msg);
+};
+
+function findWords() {
     var phonemestring = "";
     for (i = 1; i < onPhoneme; i++) { 
         phonemestring += $("#snaptarget" + i).text();
@@ -881,13 +886,12 @@ function playWord() {
     $.getJSON( "/lookups/" + phonemestring, function( data ) {
         var items = [];
         $.each( data.words, function( key, val ) {
-    items.push( "<li>" + val + "</li>" );
+            items.push( '<li><a href="javascript:playWord(' + "'" + val + "'" + ')">' + val + "</a></li>" );
   });
     $("#words").html("<ul>" + items.join( "" ) + "</ul>");
 });
     
-    // var msg = new SpeechSynthesisUtterance('Hello World');
-    // window.speechSynthesis.speak(msg);
+
 };
 </script>
 </body>
