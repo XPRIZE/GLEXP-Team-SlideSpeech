@@ -1,3 +1,8 @@
+# phoneme dictionary
+Sound Map for selecting phonemes to build English words.
+
+[Deployed here.](http://phoneme-dictionary2.appspot.com/js/english_sound_map.html)
+
 # words_and_pictures
 Python and Javascript to make and play talking pictures.
 
