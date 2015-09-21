@@ -105,6 +105,8 @@
     </div>
 
 <br style="clear:both">
+<div id = "container" style = "width:100%">
+    <div id ="left" style = "float:left; width: 50%;">
 	<img src="/js/english_sound_map.png" alt="" usemap="#Map" />
 <map name="Map" id="Map">
 <area id="V01" href="#V01" shape="rect" coords="7,2,46,51," />
@@ -195,6 +197,12 @@
 <area id="Y" href="#Y" shape="rect" coords="327,601,425,648," />
 
 </map>
+    </div>
+    <div id = "right" style = "float:left; width: 50%;">
+<div id="words"></div>
+    </div>
+</div>
+    
 <script type="text/javascript">
         var playList = [];
         var onPhoneme = 1;
@@ -866,8 +874,20 @@ function clearBar() {
 };
 
 function playWord() {
-    var msg = new SpeechSynthesisUtterance('Hello World');
-    window.speechSynthesis.speak(msg);
+    var phonemestring = "";
+    for (i = 1; i < onPhoneme; i++) { 
+        phonemestring += $("#snaptarget" + i).text();
+    }
+    $.getJSON( "/lookups/" + phonemestring, function( data ) {
+        var items = [];
+        $.each( data.words, function( key, val ) {
+    items.push( "<li>" + val + "</li>" );
+  });
+    $("#words").html("<ul>" + items.join( "" ) + "</ul>");
+});
+    
+    // var msg = new SpeechSynthesisUtterance('Hello World');
+    // window.speechSynthesis.speak(msg);
 };
 </script>
 </body>
