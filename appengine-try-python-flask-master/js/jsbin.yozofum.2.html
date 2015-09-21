@@ -1,0 +1,508 @@
+<!doctype html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2015 by jg1141 (http://jsbin.com/yozofum/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sound Blocks</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+  .draggable { width: 50px; height: 40px; padding: 5px; float: left; margin: 0 10px 10px 0; font-size: .9em; }
+  .ui-widget-header p, .ui-widget-content p { margin: 0;  }
+  #snaptarget { height: 50px; width: 60px; float: left;}
+  </style>
+  <script>
+  $(function() {
+        var audioElementV01 = document.createElement('audio');
+        audioElementV01.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V01jr.mp3');
+        var audioElementV02 = document.createElement('audio');
+        audioElementV02.setAttribute('src','https://jsbin-user-assets.s3.amazonaws.com/jg1141/V02jr.mp3');
+        var audioElementV03 = document.createElement('audio');
+        audioElementV03.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V03jr.mp3');
+        var audioElementV04 = document.createElement('audio');
+        audioElementV04.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V04jr.mp3');
+        var audioElementV05 = document.createElement('audio');
+        audioElementV05.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V05jr.mp3');
+        var audioElementV06 = document.createElement('audio');
+        audioElementV06.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V06jr.mp3');
+        var audioElementV07 = document.createElement('audio');
+        audioElementV07.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V07jr.mp3');
+        var audioElementV08 = document.createElement('audio');
+        audioElementV08.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V08jr.mp3');
+        var audioElementV09 = document.createElement('audio');
+        audioElementV09.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V09jr.mp3');
+        var audioElementV10 = document.createElement('audio');
+        audioElementV10.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V10jr.mp3');
+        var audioElementV11 = document.createElement('audio');
+        audioElementV11.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V11jr.mp3');
+        var audioElementV12 = document.createElement('audio');
+        audioElementV12.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V12jr.mp3');
+        var audioElementV13 = document.createElement('audio');
+        audioElementV13.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V13jr.mp3');
+        var audioElementV14 = document.createElement('audio');
+        audioElementV14.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V14jr.mp3');
+        var audioElementV15 = document.createElement('audio');
+        audioElementV15.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V15jr.mp3');
+        var audioElementC16 = document.createElement('audio');
+        audioElementC16.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C16.mp3');
+        var audioElementC17 = document.createElement('audio');
+        audioElementC17.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C17.mp3');
+        var audioElementC18 = document.createElement('audio');
+        audioElementC18.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C18.mp3');
+        var audioElementC19 = document.createElement('audio');
+        audioElementC19.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C19.mp3');
+        var audioElementC20 = document.createElement('audio');
+        audioElementC20.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C20.mp3');
+        var audioElementC21 = document.createElement('audio');
+        audioElementC21.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C21.mp3');
+        var audioElementC22 = document.createElement('audio');
+        audioElementC22.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C22.mp3');
+        var audioElementC23 = document.createElement('audio');
+        audioElementC23.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C23.mp3');
+        var audioElementC24 = document.createElement('audio');
+        audioElementC24.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C24.mp3');
+        var audioElementC25 = document.createElement('audio');
+        audioElementC25.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C25.mp3');
+        var audioElementC26 = document.createElement('audio');
+        audioElementC26.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C26.mp3');
+        var audioElementC27 = document.createElement('audio');
+        audioElementC27.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C26.mp3');
+        var audioElementC28 = document.createElement('audio');
+        audioElementC28.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C28.mp3');
+        var audioElementC29 = document.createElement('audio');
+        audioElementC29.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C29.mp3');
+        var audioElementC30 = document.createElement('audio');
+        audioElementC30.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C30.mp3');
+        var audioElementC31 = document.createElement('audio');
+        audioElementC31.setAttribute('src', '');
+        var audioElementC32 = document.createElement('audio');
+        audioElementC32.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C32.mp3');
+        var audioElementC33 = document.createElement('audio');
+        audioElementC33.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C33.mp3');
+        var audioElementC34 = document.createElement('audio');
+        audioElementC34.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C34.mp3');
+        var audioElementC35 = document.createElement('audio');
+        audioElementC35.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C35.mp3');
+        var audioElementC36 = document.createElement('audio');
+        audioElementC36.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C36.mp3');
+        var audioElementC37 = document.createElement('audio');
+        audioElementC37.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C37.mp3');
+        var audioElementC38 = document.createElement('audio');
+        audioElementC38.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C38.mp3');
+        var audioElementC39 = document.createElement('audio');
+        audioElementC39.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C39.mp3');
+        var audioElementC40 = document.createElement('audio');
+        audioElementC40.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C22_C36jr.mp3');
+        var audioElementC41 = document.createElement('audio');
+        audioElementC41.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C22_C28jr.mp3');
+        var audioElementC42 = document.createElement('audio');
+        audioElementC42.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C23_C29jr.mp3');
+        var audioElementC43 = document.createElement('audio');
+        audioElementC43.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C32_C36jr.mp3');
+
+
+    $( "#draggable1" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV01.play();
+        });
+    $( "#draggable2" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV02.play();
+        });
+    $( "#draggable3" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV03.play();
+        });
+    $( "#draggable4" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV04.play();
+        });
+    $( "#draggable5" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV05.play();
+        });
+    $( "#draggable6" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV06.play();
+        });
+    $( "#draggable7" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV07.play();
+        });
+    $( "#draggable8" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV08.play();
+        });
+    $( "#draggable9" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV09.play();
+        });
+    $( "#draggable10" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV10.play();
+        });
+    $( "#draggable11" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV11.play();
+        });
+    $( "#draggable12" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV12.play();
+        });
+    $( "#draggable13" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV13.play();
+        });
+    $( "#draggable14" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV14.play();
+        });
+    $( "#draggable15" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementV15.play();
+        });
+    $( "#draggable16" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC16.play();
+        });
+    $( "#draggable17" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC17.play();
+        });
+    $( "#draggable18" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC18.play();
+        });
+    $( "#draggable19" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC19.play();
+        });
+    $( "#draggable20" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC20.play();
+        });
+    $( "#draggable21" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC21.play();
+        });
+    $( "#draggable22" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC22.play();
+        });
+    $( "#draggable23" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC23.play();
+        });
+    $( "#draggable24" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC24.play();
+        });
+    $( "#draggable25" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC25.play();
+        });
+    $( "#draggable26" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC26.play();
+        });
+    $( "#draggable27" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC27.play();
+        });
+    $( "#draggable28" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC28.play();
+        });
+    $( "#draggable29" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC29.play();
+        });
+    $( "#draggable30" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC30.play();
+        });
+    $( "#draggable31" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC31.play();
+        });
+    $( "#draggable32" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC32.play();
+        });
+    $( "#draggable33" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC33.play();
+        });
+    $( "#draggable34" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC34.play();
+        });
+    $( "#draggable35" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC35.play();
+        });
+    $( "#draggable36" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC36.play();
+        });
+    $( "#draggable37" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC37.play();
+        });
+    $( "#draggable38" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC38.play();
+        });
+    $( "#draggable39" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC39.play();
+        });
+    $( "#draggable40" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC40.play();
+        });
+    $( "#draggable41" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC41.play();
+        });
+    $( "#draggable42" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC42.play();
+        });
+    $( "#draggable43" ).draggable({ snap: ".ui-widget-header", snapMode: "inner" }).mouseenter(function(){
+        audioElementC43.play();
+        });
+  });
+  </script>
+</head>
+<body>
+ 
+<div id="snaptarget" class="ui-widget-header">
+  <p>1</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>2</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>3</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>4</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>5</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>6</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>7</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>8</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>9</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>10</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>11</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>12</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>13</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>14</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>15</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>16</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>17</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>18</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>19</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>10</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>21</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>22</p>
+</div>
+<div id="snaptarget" class="ui-widget-header">
+  <p>23</p>
+</div>
+  
+ 
+<br style="clear:both">
+<div style="margin-top: 20px"> 
+<div id="draggable1" class="draggable ui-widget-content">
+  <p>V01<br>/a/</p>
+</div>
+ 
+<div id="draggable2" class="draggable ui-widget-content">
+  <p>V02<br>/i/</p>
+</div>
+ 
+<div id="draggable3" class="draggable ui-widget-content">
+  <p>V03<br>/o/</p>
+</div>
+ 
+<div id="draggable4" class="draggable ui-widget-content">
+  <p>V04<br>/u/</p>
+</div>
+ 
+<div id="draggable5" class="draggable ui-widget-content">
+  <p>V05<br>/e/</p>
+</div>
+</div>
+
+<br style="clear:both">
+<div>
+<div id="draggable6" class="draggable ui-widget-content">
+  <p>V06<br>/a_e/</p>
+</div>
+ 
+<div id="draggable7" class="draggable ui-widget-content">
+  <p>V07<br>/i_e/</p>
+</div>
+ 
+<div id="draggable8" class="draggable ui-widget-content">
+  <p>V08<br>/o_e/</p>
+</div>
+ 
+<div id="draggable9" class="draggable ui-widget-content">
+  <p>V09<br>/u_e/</p>
+</div>
+ 
+<div id="draggable10" class="draggable ui-widget-content">
+  <p>V10<br>/ee/</p>
+</div>
+</div>
+ 
+<br style="clear:both">
+<div>
+<div id="draggable11" class="draggable ui-widget-content">
+  <p>V11<br>/A/</p>
+</div>
+ 
+<div id="draggable12" class="draggable ui-widget-content">
+  <p>V12<br>/oo/</p>
+</div>
+ 
+<div id="draggable13" class="draggable ui-widget-content">
+  <p>V13<br>/ow/</p>
+</div>
+ 
+<div id="draggable14" class="draggable ui-widget-content">
+  <p>V14<br>/oy/</p>
+</div>
+ 
+<div id="draggable15" class="draggable ui-widget-content">
+  <p>V15<br>/ir/</p>
+</div>
+</div>
+ 
+<br style="clear:both">
+<div>
+<div id="draggable16" class="draggable ui-widget-content">
+  <p>C16<br>/p/</p>
+</div>
+<div id="draggable18" class="draggable ui-widget-content">
+  <p>C18<br>/t/</p>
+</div>
+<div id="draggable20" class="draggable ui-widget-content">
+  <p>C20<br>/ch/</p>
+</div>
+<div id="draggable22" class="draggable ui-widget-content">
+  <p>C22<br>/k/</p>
+</div>
+</div>
+
+<br style="clear:both">
+<div>
+<div id="draggable17" class="draggable ui-widget-content">
+  <p>C17<br>/b/</p>
+</div>
+<div id="draggable19" class="draggable ui-widget-content">
+  <p>C19<br>/d/</p>
+</div>
+<div id="draggable21" class="draggable ui-widget-content">
+  <p>C21<br>/j/</p>
+</div>
+<div id="draggable23" class="draggable ui-widget-content">
+  <p>C23<br>/g/</p>
+</div>
+</div>
+
+ 
+<br style="clear:both">
+<div>
+<div id="draggable24" class="draggable ui-widget-content">
+  <p>C24<br>/f/</p>
+</div>
+<div id="draggable26" class="draggable ui-widget-content">
+  <p>C26<br>/th/</p>
+</div>
+<div id="draggable28" class="draggable ui-widget-content">
+  <p>C28<br>/s/</p>
+</div>
+<div id="draggable30" class="draggable ui-widget-content">
+  <p>C30<br>/sh/</p>
+</div>
+<div id="draggable32" class="draggable ui-widget-content">
+  <p>C32<br>/h/</p>
+</div>
+</div>
+
+<br style="clear:both">
+<div>
+<div id="draggable25" class="draggable ui-widget-content">
+  <p>C25<br>/v/</p>
+</div>
+<div id="draggable27" class="draggable ui-widget-content">
+  <p>C27<br>/th/</p>
+</div>
+<div id="draggable29" class="draggable ui-widget-content">
+  <p>C29<br>/z/</p>
+</div>
+<div id="draggable31" class="draggable ui-widget-content">
+  <p>C31<br>/zh/</p>
+</div>
+</div>
+
+
+<br style="clear:both">
+<div>
+<div id="draggable33" class="draggable ui-widget-content">
+  <p>C33<br>/m/</p>
+</div>
+<div id="draggable34" class="draggable ui-widget-content">
+  <p>C34<br>/n/</p>
+</div>
+<div id="draggable35" class="draggable ui-widget-content">
+  <p>C35<br>/ng/</p>
+</div>
+</div>
+
+
+<br style="clear:both">
+<div>
+<div id="draggable36" class="draggable ui-widget-content">
+  <p>C36<br>/w/</p>
+</div>
+<div id="draggable37" class="draggable ui-widget-content">
+  <p>C37<br>/l/</p>
+</div>
+<div id="draggable38" class="draggable ui-widget-content">
+  <p>C38<br>/r/</p>
+</div>
+<div id="draggable39" class="draggable ui-widget-content">
+  <p>C39<br>/y/</p>
+</div>
+</div>
+
+<br style="clear:both">
+<div>
+<div id="draggable40" class="draggable ui-widget-content">
+  <p>C22+36<br>/qu/</p>
+</div>
+<div id="draggable41" class="draggable ui-widget-content">
+  <p>C22+28<br>/x/</p>
+</div>
+<div id="draggable42" class="draggable ui-widget-content">
+  <p>C23+29<br>/x/</p>
+</div>
+<div id="draggable43" class="draggable ui-widget-content">
+  <p>C32+36<br>/wh/</p>
+</div>
+</div>
+<br style="clear:both">
+<div>
+  Voices of Judy Ramirez and Jane Rotich
+  </div>
+
+</body>
+</html>

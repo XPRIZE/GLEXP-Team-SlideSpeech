@@ -1,0 +1,874 @@
+<html>
+	<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <style>
+.myButton {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+    background:-moz-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+    background:-webkit-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+    background:-o-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+    background:-ms-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+    background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0);
+    background-color:#ffffff;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #dcdcdc;
+    display:inline-block;
+    cursor:pointer;
+    color:#666666;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:17px 24px;
+    text-decoration:none;
+}
+.myButton:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f6f6f6), color-stop(1, #ffffff));
+    background:-moz-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+    background:-webkit-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+    background:-o-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+    background:-ms-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
+    background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0);
+    background-color:#f6f6f6;
+}
+.myButton:active {
+    position:relative;
+    top:1px;
+}
+
+
+  .draggable { width: 50px; height: 40px; padding: 5px; float: left; margin: 0 10px 10px 0; font-size: .9em; }
+  .ui-widget-header p, .ui-widget-content p { margin: 0;  }
+  .selected { font-size: 1.5em; float: none; text-align: center;}
+  #snaptarget1 { height: 50px; width: 60px; float: left;}
+  #snaptarget2 { height: 50px; width: 60px; float: left;}
+  #snaptarget3 { height: 50px; width: 60px; float: left;}
+  #snaptarget4 { height: 50px; width: 60px; float: left;}
+  #snaptarget5 { height: 50px; width: 60px; float: left;}
+  #snaptarget6 { height: 50px; width: 60px; float: left;}
+  #snaptarget7 { height: 50px; width: 60px; float: left;}
+  #snaptarget8 { height: 50px; width: 60px; float: left;}
+  #snaptarget9 { height: 50px; width: 60px; float: left;}
+  #snaptarget10 { height: 50px; width: 60px; float: left;}
+  #snaptarget11 { height: 50px; width: 60px; float: left;}
+  #snaptarget12 { height: 50px; width: 60px; float: left;}
+  </style>
+  </head>
+	<body>
+
+<div id="snaptarget1" class="ui-widget-header">
+  <p>1</p>
+</div>
+<div id="snaptarget2" class="ui-widget-header">
+  <p>2</p>
+</div>
+<div id="snaptarget3" class="ui-widget-header">
+  <p>3</p>
+</div>
+<div id="snaptarget4" class="ui-widget-header">
+  <p>4</p>
+</div>
+<div id="snaptarget5" class="ui-widget-header">
+  <p>5</p>
+</div>
+<div id="snaptarget6" class="ui-widget-header">
+  <p>6</p>
+</div>
+<div id="snaptarget7" class="ui-widget-header">
+  <p>7</p>
+</div>
+<div id="snaptarget8" class="ui-widget-header">
+  <p>8</p>
+</div>
+<div id="snaptarget9" class="ui-widget-header">
+  <p>9</p>
+</div>
+<div id="snaptarget10" class="ui-widget-header">
+  <p>10</p>
+</div>
+<div id="snaptarget11" class="ui-widget-header">
+  <p>11</p>
+</div>
+<div id="snaptarget12" class="ui-widget-header">
+  <p>12</p>
+</div>
+    <div>
+    <button onclick="playBar()" class="myButton" style="margin-left: 10px;"><i class="fa fa-play"></i></button>
+    <button onclick="clearBar()" class="myButton"><i class="fa fa-eject"></i></button>
+    <button onclick="playWord()" class="myButton"><i class="fa fa-search"></i></button>
+    </div>
+
+<br style="clear:both">
+	<img src="/js/english_sound_map.png" alt="" usemap="#Map" />
+<map name="Map" id="Map">
+<area id="V01" href="#V01" shape="rect" coords="7,2,46,51," />
+<area id="A" href="#A" shape="rect" coords="47,2,108,51," />
+<area id="V02" href="#V02" shape="rect" coords="109,2,148,51," />
+<area id="I" href="#I" shape="rect" coords="149,2,209,51," />
+<area id="V03" href="#V03" shape="rect" coords="210,2,249,51," />
+<area id="O" href="#O" shape="rect" coords="250,2,312,51," />
+<area id="V04" href="#V04" shape="rect" coords="313,2,352,51," />
+<area id="U" href="#U" shape="rect" coords="353,2,416,51," />
+<area id="V05" href="#V05" shape="rect" coords="417,2,456,51," />
+<area id="E" href="#E" shape="rect" coords="457,2,519,51," />
+<area id="V06" href="#V06" shape="rect" coords="7,52,46,102," />
+<area id="A_E" href="#A_E" shape="rect" coords="47,52,108,102," />
+<area id="V07" href="#V07" shape="rect" coords="109,52,148,102," />
+<area id="I_E" href="#I_E" shape="rect" coords="149,52,209,102," />
+<area id="V08" href="#V08" shape="rect" coords="210,52,249,102," />
+<area id="O_E" href="#O_E" shape="rect" coords="250,52,312,102," />
+<area id="V09" href="#V09" shape="rect" coords="313,52,352,102," />
+<area id="U_E" href="#U_E" shape="rect" coords="353,52,416,102," />
+<area id="V10" href="#V10" shape="rect" coords="417,52,456,102," />
+<area id="EE" href="#EE" shape="rect" coords="457,52,519,102," />
+<area id="V11" href="#V11" shape="rect" coords="7,103,46,162," />
+<area id="A2" href="#A2" shape="rect" coords="47,103,108,162," />
+<area id="V12" href="#V12" shape="rect" coords="109,103,148,162," />
+<area id="OO" href="#OO" shape="rect" coords="149,103,209,162," />
+<area id="V13" href="#V13" shape="rect" coords="210,103,249,162," />
+<area id="OW" href="#OW" shape="rect" coords="250,103,312,162," />
+<area id="V14" href="#V14" shape="rect" coords="313,103,352,162," />
+<area id="OY" href="#OY" shape="rect" coords="353,103,416,162," />
+<area id="V15" href="#V15" shape="rect" coords="417,103,456,162," />
+<area id="IR" href="#IR" shape="rect" coords="457,103,519,162," />
+<area id="C16" href="#C16" shape="rect" coords="9,163,100,202," />
+<area id="C18" href="#C18" shape="rect" coords="158,163,227,202," />
+<area id="C20" href="#C20" shape="rect" coords="228,163,326,202," />
+<area id="C22" href="#C22" shape="rect" coords="327,163,425,202," />
+<area id="C22_36" href="#C22_36" shape="rect" coords="446,173,516,203," />
+<area id="P" href="#P" shape="rect" coords="9,203,100,239," />
+<area id="T" href="#T" shape="rect" coords="158,203,227,239," />
+<area id="CH" href="#CH" shape="rect" coords="228,203,326,239," />
+<area id="K" href="#K" shape="rect" coords="327,203,425,239," />
+<area id="QU" href="#QU" shape="rect" coords="446,204,516,263," />
+<area id="C17" href="#C17" shape="rect" coords="9,240,100,274," />
+<area id="C19" href="#C19" shape="rect" coords="158,240,227,274," />
+<area id="C21" href="#C21" shape="rect" coords="228,240,326,274," />
+<area id="C23" href="#C23" shape="rect" coords="327,240,425,274," />
+<area id="C22_28" href="#C22_28" shape="rect" coords="446,264,516,294," />
+<area id="B" href="#B" shape="rect" coords="9,275,100,326," />
+<area id="D" href="#D" shape="rect" coords="158,275,227,326," />
+<area id="J" href="#J" shape="rect" coords="228,275,326,326," />
+<area id="G" href="#G" shape="rect" coords="327,275,425,326," />
+<area id="X" href="#X" shape="rect" coords="446,295,516,347," />
+<area id="C24" href="#C24" shape="rect" coords="9,327,80,361," />
+<area id="C26" href="#C26" shape="rect" coords="81,327,157,361," />
+<area id="C28" href="#C28" shape="rect" coords="158,327,227,361," />
+<area id="C30" href="#C30" shape="rect" coords="228,327,326,361," />
+<area id="C32" href="#C32" shape="rect" coords="327,327,425,361," />
+<area id="C23_29" href="#C23_29" shape="rect" coords="446,348,516,378," />
+<area id="F" href="#F" shape="rect" coords="9,362,100,397," />
+<area id="TH" href="#TH" shape="rect" coords="81,362,157,397," />
+<area id="S" href="#S" shape="rect" coords="158,362,227,397," />
+<area id="SH" href="#SH" shape="rect" coords="228,362,326,397," />
+<area id="H" href="#H" shape="rect" coords="327,362,425,397," />
+<area id="X2" href="#X2" shape="rect" coords="446,379,516,435," />
+<area id="C25" href="#C25" shape="rect" coords="9,398,80,432," />
+<area id="C27" href="#C27" shape="rect" coords="81,398,157,432," />
+<area id="C29" href="#C29" shape="rect" coords="158,398,227,432," />
+<area id="C31" href="#C31" shape="rect" coords="228,398,326,432," />
+<area id="C32_36" href="#C32_36" shape="rect" coords="446,436,516,476," />
+<area id="V" href="#V" shape="rect" coords="9,433,100,481," />
+<area id="TH2" href="#TH2" shape="rect" coords="81,433,157,481," />
+<area id="Z" href="#Z" shape="rect" coords="158,433,227,481," />
+<area id="ZH" href="#ZH" shape="rect" coords="228,433,326,481," />
+<area id="WH" href="#WH" shape="rect" coords="446,477,516,527," />
+<area id="C33" href="#C33" shape="rect" coords="9,482,100,516," />
+<area id="C34" href="#C34" shape="rect" coords="158,482,227,516," />
+<area id="C35" href="#C35" shape="rect" coords="327,482,425,516," />
+<area id="M" href="#M" shape="rect" coords="9,517,100,564," />
+<area id="N" href="#N" shape="rect" coords="158,517,227,564," />
+<area id="NG" href="#NG" shape="rect" coords="327,517,425,564," />
+<area id="C36" href="#C36" shape="rect" coords="9,565,100,600," />
+<area id="C37" href="#C37" shape="rect" coords="158,565,227,600," />
+<area id="C38" href="#C38" shape="rect" coords="228,565,326,600," />
+<area id="C39" href="#C39" shape="rect" coords="327,565,425,600," />
+<area id="W" href="#W" shape="rect" coords="9,601,100,648," />
+<area id="L" href="#L" shape="rect" coords="158,601,227,648," />
+<area id="R" href="#R" shape="rect" coords="228,601,326,648," />
+<area id="Y" href="#Y" shape="rect" coords="327,601,425,648," />
+
+</map>
+<script type="text/javascript">
+        var playList = [];
+        var onPhoneme = 1;
+	$(document).ready(function()
+	{
+
+        var audioElementV01 = document.createElement('audio');
+        audioElementV01.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V01jr.mp3');
+        var audioElementV02 = document.createElement('audio');
+        audioElementV02.setAttribute('src','https://jsbin-user-assets.s3.amazonaws.com/jg1141/V02jr.mp3');
+        var audioElementV03 = document.createElement('audio');
+        audioElementV03.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V03jr.mp3');
+        var audioElementV04 = document.createElement('audio');
+        audioElementV04.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V04jr.mp3');
+        var audioElementV05 = document.createElement('audio');
+        audioElementV05.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V05jr.mp3');
+        var audioElementV06 = document.createElement('audio');
+        audioElementV06.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V06jr.mp3');
+        var audioElementV07 = document.createElement('audio');
+        audioElementV07.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V07jr.mp3');
+        var audioElementV08 = document.createElement('audio');
+        audioElementV08.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V08jr.mp3');
+        var audioElementV09 = document.createElement('audio');
+        audioElementV09.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V09jr.mp3');
+        var audioElementV10 = document.createElement('audio');
+        audioElementV10.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V10jr.mp3');
+        var audioElementV11 = document.createElement('audio');
+        audioElementV11.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V11jr.mp3');
+        var audioElementV12 = document.createElement('audio');
+        audioElementV12.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V12jr.mp3');
+        var audioElementV13 = document.createElement('audio');
+        audioElementV13.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V13jr.mp3');
+        var audioElementV14 = document.createElement('audio');
+        audioElementV14.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V14jr.mp3');
+        var audioElementV15 = document.createElement('audio');
+        audioElementV15.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/V15jr.mp3');
+        var audioElementC16 = document.createElement('audio');
+        audioElementC16.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C16jr.mp3');
+        var audioElementC17 = document.createElement('audio');
+        audioElementC17.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C17jr.mp3');
+        var audioElementC18 = document.createElement('audio');
+        audioElementC18.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C18jr.mp3');
+        var audioElementC19 = document.createElement('audio');
+        audioElementC19.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C19jr.mp3');
+        var audioElementC20 = document.createElement('audio');
+        audioElementC20.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C20jr.mp3');
+        var audioElementC21 = document.createElement('audio');
+        audioElementC21.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C21jr.mp3');
+        var audioElementC22 = document.createElement('audio');
+        audioElementC22.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C22jr.mp3');
+        var audioElementC23 = document.createElement('audio');
+        audioElementC23.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C23jr.mp3');
+        var audioElementC24 = document.createElement('audio');
+        audioElementC24.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C24jr.mp3');
+        var audioElementC25 = document.createElement('audio');
+        audioElementC25.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C25jr.mp3');
+        var audioElementC26 = document.createElement('audio');
+        audioElementC26.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C26jr.mp3');
+        var audioElementC27 = document.createElement('audio');
+        audioElementC27.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C27jr.mp3');
+        var audioElementC28 = document.createElement('audio');
+        audioElementC28.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C28jr.mp3');
+        var audioElementC29 = document.createElement('audio');
+        audioElementC29.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C29jr.mp3');
+        var audioElementC30 = document.createElement('audio');
+        audioElementC30.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C30jr.mp3');
+        var audioElementC31 = document.createElement('audio');
+        audioElementC31.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C31jr.mp3');
+        var audioElementC32 = document.createElement('audio');
+        audioElementC32.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C32jr.mp3');
+        var audioElementC33 = document.createElement('audio');
+        audioElementC33.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C33jr.mp3');
+        var audioElementC34 = document.createElement('audio');
+        audioElementC34.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C34jr.mp3');
+        var audioElementC35 = document.createElement('audio');
+        audioElementC35.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C35jr.mp3');
+        var audioElementC36 = document.createElement('audio');
+        audioElementC36.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C36jr.mp3');
+        var audioElementC37 = document.createElement('audio');
+        audioElementC37.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C37jr.mp3');
+        var audioElementC38 = document.createElement('audio');
+        audioElementC38.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C38jr.mp3');
+        var audioElementC39 = document.createElement('audio');
+        audioElementC39.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C39jr.mp3');
+        var audioElementC40 = document.createElement('audio');
+        audioElementC40.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C22_C36jr.mp3');
+        var audioElementC41 = document.createElement('audio');
+        audioElementC41.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C22_C28jr.mp3');
+        var audioElementC42 = document.createElement('audio');
+        audioElementC42.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C23_C29jr.mp3');
+        var audioElementC43 = document.createElement('audio');
+        audioElementC43.setAttribute('src', 'https://jsbin-user-assets.s3.amazonaws.com/jg1141/C32_C36jr.mp3');
+
+        $("#V01").on("click", function(e){
+            e.preventDefault();
+            audioElementV01.play();
+        });
+        $("#V02").on("click", function(e){
+            e.preventDefault();
+            audioElementV02.play();
+        });
+        $("#V03").on("click", function(e){
+            e.preventDefault();
+            audioElementV03.play();
+        });
+        $("#V04").on("click", function(e){
+            e.preventDefault();
+            audioElementV04.play();
+        });
+        $("#V05").on("click", function(e){
+            e.preventDefault();
+            audioElementV05.play();
+        });
+        $("#V06").on("click", function(e){
+            e.preventDefault();
+            audioElementV06.play();
+        });
+        $("#V07").on("click", function(e){
+            e.preventDefault();
+            audioElementV07.play();
+        });
+        $("#V08").on("click", function(e){
+		    e.preventDefault();
+		    audioElementV08.play();
+		});
+        $("#V09").on("click", function(e){
+		    e.preventDefault();
+		    audioElementV09.play();
+		});
+        $("#V10").on("click", function(e){
+		    e.preventDefault();
+		    audioElementV10.play();
+		});
+        $("#V11").on("click", function(e){
+            e.preventDefault();
+            audioElementV11.play();
+        });
+        $("#V12").on("click", function(e){
+            e.preventDefault();
+            audioElementV12.play();
+        });
+        $("#V13").on("click", function(e){
+            e.preventDefault();
+            audioElementV13.play();
+        });
+        $("#V14").on("click", function(e){
+            e.preventDefault();
+            audioElementV14.play();
+        });
+        $("#V15").on("click", function(e){
+            e.preventDefault();
+            audioElementV15.play();
+        });
+
+        $("#A").on("click", function(e){
+            e.preventDefault();
+            audioElementV01.play();
+            playList.push(audioElementV01);
+            $("#snaptarget" + onPhoneme).text("V01");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+        $("#I").on("click", function(e){
+            e.preventDefault();
+            audioElementV02.play();
+            playList.push(audioElementV02);
+            $("#snaptarget" + onPhoneme).text("V02");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+        $("#O").on("click", function(e){
+            e.preventDefault();
+            audioElementV03.play();
+            playList.push(audioElementV03);
+            $("#snaptarget" + onPhoneme).text("V03");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+        $("#U").on("click", function(e){
+            e.preventDefault();
+            audioElementV04.play();
+            playList.push(audioElementV04);
+            $("#snaptarget" + onPhoneme).text("V04");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+        $("#E").on("click", function(e){
+            e.preventDefault();
+            audioElementV05.play();
+            playList.push(audioElementV05);
+            $("#snaptarget" + onPhoneme).text("V05");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+        // --------------------------
+
+        $("#A_E").on("click", function(e){
+            e.preventDefault();
+            audioElementV06.play();
+            playList.push(audioElementV06);
+            $("#snaptarget" + onPhoneme).text("V06");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+        $("#I_E").on("click", function(e){
+            e.preventDefault();
+            audioElementV07.play();
+            playList.push(audioElementV07);
+            $("#snaptarget" + onPhoneme).text("V07");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+        $("#O_E").on("click", function(e){
+            e.preventDefault();
+            audioElementV08.play();
+            playList.push(audioElementV08);
+            $("#snaptarget" + onPhoneme).text("V08");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+        $("#U_E").on("click", function(e){
+            e.preventDefault();
+            audioElementV09.play();
+            playList.push(audioElementV09);
+            $("#snaptarget" + onPhoneme).text("V09");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+        $("#EE").on("click", function(e){
+            e.preventDefault();
+            audioElementV10.play();
+            playList.push(audioElementV10);
+            $("#snaptarget" + onPhoneme).text("V10");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+        // --------------------------
+
+        $("#A2").on("click", function(e){
+		    e.preventDefault();
+		    audioElementV11.play();
+            playList.push(audioElementV11);
+		    $("#snaptarget" + onPhoneme).text("V11");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+
+        $("#OO").on("click", function(e){
+            e.preventDefault();
+            audioElementV12.play();
+            playList.push(audioElementV12);
+            $("#snaptarget" + onPhoneme).text("V12");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+        $("#OW").on("click", function(e){
+            e.preventDefault();
+            audioElementV13.play();
+            playList.push(audioElementV13);
+            $("#snaptarget" + onPhoneme).text("V13");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+        $("#OY").on("click", function(e){
+            e.preventDefault();
+            audioElementV14.play();
+            playList.push(audioElementV14);
+            $("#snaptarget" + onPhoneme).text("V14");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+        $("#IR").on("click", function(e){
+            e.preventDefault();
+            audioElementV15.play();
+            playList.push(audioElementV15);
+            $("#snaptarget" + onPhoneme).text("V15");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+        // --------------------------
+
+        $("#C16").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC16.play();
+		});
+        $("#C17").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC17.play();
+		});
+        $("#C18").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC18.play();
+		});
+        $("#C19").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC19.play();
+		});
+        $("#C20").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC20.play();
+		});
+        $("#C21").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC21.play();
+		});
+        $("#C22").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC22.play();
+		});
+        $("#C23").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC23.play();
+		});
+        $("#C24").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC24.play();
+		});
+        $("#C25").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC25.play();
+		});
+        $("#C26").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC26.play();
+		});
+        $("#C27").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC27.play();
+		});
+        $("#C28").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC28.play();
+		});
+        $("#C29").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC29.play();
+		});
+        $("#C30").on("click", function(e){
+            e.preventDefault();
+            audioElementC30.play();
+        });
+        $("#C31").on("click", function(e){
+            e.preventDefault();
+            audioElementC31.play();
+        });
+        $("#C32").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC32.play();
+		});
+        $("#C33").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC33.play();
+		});
+        $("#C34").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC34.play();
+		});
+        $("#C35").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC35.play();
+		});
+        $("#C36").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC36.play();
+		});
+        $("#C37").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC37.play();
+		});
+        $("#C38").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC38.play();
+		});
+        $("#C39").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC39.play();
+		});
+        // ------
+        $("#C22_36").on("click", function(e){
+            e.preventDefault();
+            audioElementC40.play();
+        });
+        $("#C22_28").on("click", function(e){
+            e.preventDefault();
+            audioElementC41.play();
+        });
+        $("#C23_29").on("click", function(e){
+            e.preventDefault();
+            audioElementC42.play();
+        });
+        $("#C32_36").on("click", function(e){
+            e.preventDefault();
+            audioElementC43.play();
+        });
+
+
+        $("#P").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC16.play();
+            playList.push(audioElementC16);
+		    $("#snaptarget" + onPhoneme).text("C16");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#B").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC17.play();
+            playList.push(audioElementC17);
+		    $("#snaptarget" + onPhoneme).text("C17");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#T").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC18.play();
+            playList.push(audioElementC18);
+		    $("#snaptarget" + onPhoneme).text("C18");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#D").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC19.play();
+            playList.push(audioElementC19);
+		    $("#snaptarget" + onPhoneme).text("C19");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#CH").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC20.play();
+            playList.push(audioElementC20);
+		    $("#snaptarget" + onPhoneme).text("C20");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#J").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC21.play();
+            playList.push(audioElementC21);
+		    $("#snaptarget" + onPhoneme).text("C21");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#K").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC22.play();
+            playList.push(audioElementC22);
+		    $("#snaptarget" + onPhoneme).text("C22");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#G").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC23.play();
+            playList.push(audioElementC23);
+		    $("#snaptarget" + onPhoneme).text("C23");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#F").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC24.play();
+            playList.push(audioElementC24);
+		    $("#snaptarget" + onPhoneme).text("C24");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#V").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC25.play();
+            playList.push(audioElementC25);
+		    $("#snaptarget" + onPhoneme).text("C25");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#TH").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC26.play();
+            playList.push(audioElementC26);
+		    $("#snaptarget" + onPhoneme).text("C26");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#TH2").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC27.play();
+            playList.push(audioElementC27);
+		    $("#snaptarget" + onPhoneme).text("C27");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#S").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC28.play();
+            playList.push(audioElementC28);
+		    $("#snaptarget" + onPhoneme).text("C28");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#Z").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC29.play();
+            playList.push(audioElementC29);
+		    $("#snaptarget" + onPhoneme).text("C29");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#SH").on("click", function(e){
+            e.preventDefault();
+            audioElementC30.play();
+            playList.push(audioElementC30);
+            $("#snaptarget" + onPhoneme).text("C30");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+        $("#ZH").on("click", function(e){
+            e.preventDefault();
+            audioElementC31.play();
+            playList.push(audioElementC31);
+            $("#snaptarget" + onPhoneme).text("C31");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+        $("#H").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC32.play();
+            playList.push(audioElementC32);
+		    $("#snaptarget" + onPhoneme).text("C32");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#M").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC33.play();
+            playList.push(audioElementC33);
+		    $("#snaptarget" + onPhoneme).text("C33");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#N").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC34.play();
+            playList.push(audioElementC34);
+		    $("#snaptarget" + onPhoneme).text("C34");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#NG").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC35.play();
+            playList.push(audioElementC35);
+		    $("#snaptarget" + onPhoneme).text("C35");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#W").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC36.play();
+            playList.push(audioElementC36);
+		    $("#snaptarget" + onPhoneme).text("C36");
+		    $("#snaptarget" + onPhoneme).addClass("selected");
+		    onPhoneme += 1;
+		});
+        $("#L").on("click", function(e){
+            e.preventDefault();
+            audioElementC37.play();
+            playList.push(audioElementC37);
+            $("#snaptarget" + onPhoneme).text("C37");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+        $("#R").on("click", function(e){
+            e.preventDefault();
+            audioElementC38.play();
+            playList.push(audioElementC38);
+            $("#snaptarget" + onPhoneme).text("C38");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+        $("#Y").on("click", function(e){
+            e.preventDefault();
+            audioElementC39.play();
+            playList.push(audioElementC39);
+            $("#snaptarget" + onPhoneme).text("C39");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+        $("#QU").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC40.play();
+            playList.push(audioElementC22);
+            $("#snaptarget" + onPhoneme).text("C22");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+            playList.push(audioElementC36);
+            $("#snaptarget" + onPhoneme).text("C36");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+		});
+        $("#X").on("click", function(e){
+		    e.preventDefault();
+		    audioElementC41.play();
+            playList.push(audioElementC22);
+            $("#snaptarget" + onPhoneme).text("C22");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+            playList.push(audioElementC28);
+            $("#snaptarget" + onPhoneme).text("C28");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+		});
+        $("#X2").on("click", function(e){
+            e.preventDefault();
+            audioElementC42.play();
+            playList.push(audioElementC23);
+            $("#snaptarget" + onPhoneme).text("C23");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+            playList.push(audioElementC29);
+            $("#snaptarget" + onPhoneme).text("C29");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+        $("#WH").on("click", function(e){
+            e.preventDefault();
+            audioElementC43.play();
+            playList.push(audioElementC32);
+            $("#snaptarget" + onPhoneme).text("C32");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+            playList.push(audioElementC36);
+            $("#snaptarget" + onPhoneme).text("C36");
+            $("#snaptarget" + onPhoneme).addClass("selected");
+            onPhoneme += 1;
+        });
+
+	});
+
+function playBar() {
+    for (i = 0; i < playList.length; i++) { 
+        setTimeout("playItem(" + i + ")", i * 1000);
+}
+};
+function playItem(playBarIndex) {
+        playList[playBarIndex].play();
+};
+
+function clearBar() {
+    onPhoneme = 1;
+    for (i = 1; i < 13; i++) { 
+        $("#snaptarget" + i).text(i);
+        $("#snaptarget" + i).removeClass("selected");
+        playList = [];
+}
+
+};
+
+function playWord() {
+    var msg = new SpeechSynthesisUtterance('Hello World');
+    window.speechSynthesis.speak(msg);
+};
+</script>
+</body>
+	</html>

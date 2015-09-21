@@ -1,0 +1,17 @@
+application: phoneme-dictionary2
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+handlers:
+- url: /js
+  static_dir: js
+
+- url: .*
+  script: main.app
+
+libraries:
+- name: jinja2
+  version: "2.6"
+- name: markupsafe
+  version: "0.15"
