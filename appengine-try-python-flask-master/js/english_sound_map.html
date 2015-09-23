@@ -99,6 +99,7 @@
   <p>12</p>
 </div>
     <div>
+    <button onclick="clearLast()" class="myButton" style="margin-left: 10px;"><i class="fa fa-remove"></i></button>
     <button onclick="playBar()" class="myButton" style="margin-left: 10px;"><i class="fa fa-play"></i></button>
     <button onclick="clearBar()" class="myButton"><i class="fa fa-eject"></i></button>
     <button onclick="findWords()" class="myButton"><i class="fa fa-search"></i></button>
@@ -869,8 +870,18 @@ function clearBar() {
         $("#snaptarget" + i).text(i);
         $("#snaptarget" + i).removeClass("selected");
         playList = [];
-}
+        $("#words").html("");
+    }
+};
 
+function clearLast() {
+    if (onPhoneme > 1) {
+        onPhoneme -= 1;
+        $("#snaptarget" + onPhoneme).text(onPhoneme);
+        $("#snaptarget" + onPhoneme).removeClass("selected");
+        playList.pop();
+        $("#words").html("");
+    }
 };
 
 function playWord(word) {
@@ -879,6 +890,7 @@ function playWord(word) {
 };
 
 function findWords() {
+    $("#words").html("Searching ...");
     var phonemestring = "";
     for (i = 1; i < onPhoneme; i++) { 
         phonemestring += $("#snaptarget" + i).text();
@@ -886,9 +898,16 @@ function findWords() {
     $.getJSON( "/lookups/" + phonemestring, function( data ) {
         var items = [];
         $.each( data.words, function( key, val ) {
-            items.push( '<li><a href="javascript:playWord(' + "'" + val + "'" + ')">' + val + "</a></li>" );
-  });
-    $("#words").html("<ul>" + items.join( "" ) + "</ul>");
+            console.log(val)
+            var array = val.split(',')
+            console.log(array)
+            items.push( '<tr><td><a href="javascript:playWord(' + "'" + array[0] + "'" + ')">' + array[0] + "</a></td><td>" + array[1] + "<td></tr>" );
+        });
+        if (items.length > 0) {
+            $("#words").html("<table>" + items.join( "" ) + "</table>");
+        } else {
+            $("#words").html("No match");
+        };
 });
     
 
