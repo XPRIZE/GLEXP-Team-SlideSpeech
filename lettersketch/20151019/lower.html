@@ -152,6 +152,7 @@ Released under the MIT license: http://jsbin.mit-license.org
     } else {
       updateProgress(0);
       loop(); 
+      $.get("http://localhost:5000/wiped/"+on_gif)
     }
   }
 
@@ -195,6 +196,7 @@ Released under the MIT license: http://jsbin.mit-license.org
       return;
     }
     if (mouseX > 386 && mouseY < 20) {
+      $.get("http://localhost:5000/clearCanvas/"+on_gif)
       mouseDown=0;
       ctx.clearRect(0, 0, sketchpad.width, sketchpad.height);
       if (on_gif == "") {
@@ -206,6 +208,7 @@ Released under the MIT license: http://jsbin.mit-license.org
       clearTimeout(timeoutVar);
       return;
     }
+    $.get("http://localhost:5000/sketchpad_mouseUp/"+on_gif)
 
     // get current image
     var myImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -235,6 +238,7 @@ Released under the MIT license: http://jsbin.mit-license.org
         }
       }
       if (red_count < threshold && grey_count < threshold) {
+        $.get("http://localhost:5000/PASS/"+on_gif)
         console.log("Red/Grey", red_count, grey_count, "PASS")
         document.getElementById('gif').style.display = 'none';
         on_gif = "";
@@ -335,6 +339,7 @@ Released under the MIT license: http://jsbin.mit-license.org
 
   // Set-up the canvas and add our event handlers after the page has loaded
   function init() {
+    $.get("http://localhost:5000/init/0")
     // Get the specific canvas element from the HTML document
     canvas = document.getElementById('sketchpad');
 
@@ -357,6 +362,7 @@ Released under the MIT license: http://jsbin.mit-license.org
   }
 
   function show_gif(gif) {
+    $.get("http://localhost:5000/show_gif/"+gif)
     on_gif = gif;
     document.getElementById('gif').style.display = "block";
     document.getElementById('gif').innerHTML = '<div style="float:left; margin-left:10px"><img onclick="document.getElementById(\'gif\').style.display = \'none\';" src="gif/'+gif+'.gif"></div><div style="float:left; margin-left:10px"><H1><i onclick="play_audio(\''+gif+'\');" class="fa fa-play"></i></H1></div></div><br style="clear:both">';
@@ -364,6 +370,7 @@ Released under the MIT license: http://jsbin.mit-license.org
   }
 
   function play_audio(mp3) {
+    $.get("http://localhost:5000/play_audio/"+mp3)
     console.log(mp3);
     audioElement01.setAttribute('src','mp3/'+ mp3+'.mp3');
     audioElement01.play();
