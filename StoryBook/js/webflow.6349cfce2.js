@@ -2702,7 +2702,7 @@ module.exports = function($, _) {
     var story;
     var on_slide = 0;
     var json_data_file = "test_output.json"
-    var json_path = "assets/json/" + json_data_file
+    var json_path = "json/" + json_data_file
     var audio_path = "assets/audio/" + json_data_file
     var image_path = "assets/images/" + json_data_file
     var url = getURLParameter('json') || json_path;
