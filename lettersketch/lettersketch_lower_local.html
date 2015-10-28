@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+    Created using JS Bin
+    http://jsbin.com
+
+    Copyright (c) 2015 by jg1141 (http://jsbin.com/libutu/9/edit)
+
+    Released under the MIT license: http://jsbin.mit-license.org
+  -->
+<meta name="robots" content="noindex">
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link id="jsbin-css" rel="stylesheet" type="text/css" href="css/lettersketch_ui.css">
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <meta charset="utf-8">
+    <title>JS Bin</title>
+  </head>
+  <body onload="init()">
+    <div class="sketchpad_side">
+      <div id="sketchpadapp">
+	<canvas id="sketchpad" height="288" width="398"></canvas>
+      </div>
+      <br style="clear:both">
+      <div id="pbar_outerdiv" style="width: 398px; height: 20px; border: 1px solid grey; z-index: 1; position: relative; border-radius: 5px; -moz-border-radius: 5px; ">
+	<div id="pbar_innerdiv" style="background-color: gray; z-index: 2; height: 100%; width: 0%;">
+	</div>
+      </div>
+
+      <br style="clear:both">
+      <div id="gif"></div>
+    </div>
+
+    <div class="alphabet_side">
+
+      <div style="float:left;"><H1>Straight Lines and Angled Lines</H1></div>
+      <div style="float:left; margin-left:10px"><H1><i onclick="play_audio('straightlines');" class="fa fa-play"></i></H1></div>
+      <br style="clear:both">
+
+      <img onclick="show_gif('small_l');" height="50px" style="float-left: true"  src="assets/images/small_l.gif">
+      <img onclick="show_gif('small_k');" height="50px" style="float-left: true"  src="assets/images/small_k.gif">
+      <img onclick="show_gif('small_v');" height="50px" style="float-left: true"  src="assets/images/small_v.gif">
+      <img onclick="show_gif('small_w');" height="50px" style="float-left: true"  src="assets/images/small_w.gif">
+      <img onclick="show_gif('small_y');" height="50px" style="float-left: true"  src="assets/images/small_y.gif">
+      <img onclick="show_gif('small_x');" height="50px" style="float-left: true"  src="assets/images/small_x.gif">
+      <img onclick="show_gif('small_z');" height="50px" style="float-left: true"  src="assets/images/small_z.gif">
+      <br style="clear:both">
+      <div style="float:left;"><H1>Side Curves</H1></div><div style="float:left; margin-left:10px"><H1><i onclick="play_audio('sidecurves');" class="fa fa-play"></i></H1></div><br style="clear:both">
+      <img onclick="show_gif('small_h');" height="50px" style="float-left: true"  src="assets/images/small_h.gif"><img onclick="show_gif('small_n');" height="50px" style="float-left: true"  src="assets/images/small_n.gif"><img onclick="show_gif('small_m');" height="50px" style="float-left: true"  src="assets/images/small_m.gif"><img onclick="show_gif('small_r');" height="50px" style="float-left: true"  src="assets/images/small_r.gif">
+      <br style="clear:both">
+      <div style="float:left;"><H1>Circles</H1></div><div style="float:left; margin-left:10px"><H1><i onclick="play_audio('circles');" class="fa fa-play"></i></H1></div><br style="clear:both">
+      <img onclick="show_gif('small_o');" height="50px" style="float-left: true"  src="assets/images/small_o.gif"><img onclick="show_gif('small_c');" height="50px" style="float-left: true"  src="assets/images/small_c.gif">
+
+      <br style="clear:both">
+      <div style="float:left;"><H1>Circles and Lines</H1></div><div style="float:left; margin-left:10px"><H1><i onclick="play_audio('circlesandlines');" class="fa fa-play"></i></H1></div><br style="clear:both">
+      <img onclick="show_gif('small_a');" height="50px" style="float-left: true"  src="assets/images/small_a.gif"><img onclick="show_gif('small_p');" height="50px" style="float-left: true"  src="assets/images/small_p.gif"><img onclick="show_gif('small_b');" height="50px" style="float-left: true"  src="assets/images/small_b.gif">
+      <img onclick="show_gif('small_e');" height="50px" style="float-left: true"  src="assets/images/small_e.gif"><img onclick="show_gif('small_d');" height="50px" style="float-left: true"  src="assets/images/small_d.gif">
+      <br style="clear:both">
+      <div style="float:left;"><H1>Side Curves and Lines</H1></div><div style="float:left; margin-left:10px"><H1><i onclick="play_audio('sidecurvesandlines');" class="fa fa-play"></i></H1></div><br style="clear:both">
+      <img onclick="show_gif('small_f');" height="50px" style="float-left: true"  src="assets/images/small_f.gif"><img onclick="show_gif('small_t');" height="50px" style="float-left: true"  src="assets/images/small_t.gif">
+      <br style="clear:both">
+      <div style="float:left;"><H1>Dots</H1></div><div style="float:left; margin-left:10px"><H1><i onclick="play_audio('dots');" class="fa fa-play"></i></H1></div><br style="clear:both">
+      <img onclick="show_gif('small_i');" height="50px" style="float-left: true"  src="assets/images/small_i.gif"><img onclick="show_gif('small_j');" height="50px" style="float-left: true"  src="assets/images/small_j.gif">
+      <br style="clear:both">
+      <div style="float:left;"><H1>Circles and Bottom Curves</H1></div><div style="float:left; margin-left:10px"><H1><i onclick="play_audio('circlesandbottomcurves');" class="fa fa-play"></i></H1></div><br style="clear:both">
+      <img onclick="show_gif('small_g');" height="50px" style="float-left: true"  src="assets/images/small_g.gif"><img onclick="show_gif('small_q');" height="50px" style="float-left: true"  src="assets/images/small_q.gif">
+      <br style="clear:both">
+      <div style="float:left;"><H1>All Curves</H1></div><div style="float:left; margin-left:10px"><H1><i onclick="play_audio('allcurves');" class="fa fa-play"></i></H1></div><br style="clear:both">
+      <img onclick="show_gif('small_u');" height="50px" style="float-left: true"  src="assets/images/small_u.gif">
+      <img onclick="show_gif('small_s');" height="50px" style="float-left: true"  src="assets/images/small_s.gif">
+      <br style="clear:both">
+      <div style="float:left;"><H1>Numbers</H1></div><div style="float:left; margin-left:10px"><H1><i onclick="play_audio('numbers');" class="fa fa-play"></i></H1></div><br style="clear:both">
+      <img onclick="show_gif('0');" height="50px" style="float-left: true"  src="assets/images/0.gif">
+      <img onclick="show_gif('1');" height="50px" style="float-left: true"  src="assets/images/1.gif">
+      <img onclick="show_gif('2');" height="50px" style="float-left: true"  src="assets/images/2.gif">
+      <img onclick="show_gif('3');" height="50px" style="float-left: true"  src="assets/images/3.gif">
+      <img onclick="show_gif('4');" height="50px" style="float-left: true"  src="assets/images/4.gif">
+      <br style="clear:both">
+      <img onclick="show_gif('5');" height="50px" style="float-left: true"  src="assets/images/5.gif">
+      <img onclick="show_gif('6');" height="50px" style="float-left: true"  src="assets/images/6.gif">
+      <img onclick="show_gif('7');" height="50px" style="float-left: true"  src="assets/images/7.gif">
+      <img onclick="show_gif('8');" height="50px" style="float-left: true"  src="assets/images/8.gif">
+      <img onclick="show_gif('9');" height="50px" style="float-left: true"  src="assets/images/9.gif">
+    </div>
+
+    <div class="nav">
+      <H1>
+	<a href="lettersketch_upper_local.html">UPPERCASE</a>
+	<i style="margin-left:10px" onclick="play_audio('lower');" class="fa fa-play"></i>
+      </H1>
+    </div>
+    <script src="js/lettersketch_ui.js" id="jsbin-javascript"></script>
+  </body>
+</html>
