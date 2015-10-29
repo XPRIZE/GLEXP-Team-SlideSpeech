@@ -27,6 +27,10 @@ function animateUpdate() {
     g_timeoutVar = setTimeout(animateUpdate, g_timeoutVal);
   } else {
     updateProgress(0);
+
+    // Save the new image from the canvas
+    saveCanvas();
+
     loop(); 
     if (g_onGIF.length == 0) {
       $.get("http://localhost:5000/wiped/no_gif")
@@ -312,4 +316,42 @@ function draw_example(gif){
   $('html, body').animate({ scrollTop: 0 }, 'fast');
 }
 
+/*--------------------------------------------------------------------------
+ * Save the contents of the canvas to a png file in the browser-determined
+ * "Downloads" folder
+ *--------------------------------------------------------------------------*/
+var g_savedImageCounter = 0;
+function saveCanvas() {
 
+  // Try to recover new image
+  var myImageData = g_ctx.getImageData(0, 0, g_canvas.width, g_canvas.height);
+  var data = myImageData.data;
+  var ref_data = g_referenceImage.data;
+  for (var i = 0; i < data.length; i += 4) {
+    if (data[i] == 0 && data[i+1] == 0 && data[i+2] == 0) {
+      data[i] = 255;
+      data[i+1] = 0;
+      data[i+2] = 0;
+      console.log("ref_data = " + ref_data[i] + "," + ref_data[i+1] + "," + ref_data[i+2])
+    }
+  }
+  g_ctx.putImageData(myImageData, 0, 0);
+
+  // Save the canvas
+  console.log("Saving canvas");
+  var MIME_Type = "image/png";
+  var imageURL = g_canvas.toDataURL(MIME_Type);
+  var fileName = "lettersketch_saved_" + g_savedImageCounter;
+
+  var dlLink = document.createElement('a');
+  dlLink.download = fileName;
+  dlLink.href = imageURL;
+  dlLink.dataset.downloadurl = [MIME_Type, dlLink.download, dlLink.href].join(':');
+
+  document.body.appendChild(dlLink);
+  dlLink.click();
+  document.body.removeChild(dlLink);
+  
+  g_savedImageCounter++;
+  console.log( "Saved to " + fileName );
+}
