@@ -1,50 +1,59 @@
-var start = new Date();
-var maxTime = 4000;
-var timeoutVal = Math.floor(maxTime/100);
-var timeoutVar;
-var on_gif = "";
-var reference_image;
-var ref_grey_count = 0;
-var threshold = 0;
-var audioElement01 = document.createElement('audio');
-audioElement01.setAttribute('src', 'assets/audio/lower.mp3');
+/*
+ *  Global variable naming convention: g_variableName
+ */
+var g_start = new Date();
+var g_maxTime = 4000;
+var g_timeoutVal = Math.floor(g_maxTime/100);
+var g_timeoutVar;
+var g_onGIF = "";
+var g_referenceImage;
+var g_refGreyCount = 0;
+var g_threshold = 0;
+
+// Moved to separate files
+// var g_audioElement01 = document.createElement('audio');
+// g_audioElement01.setAttribute('src', 'assets/audio/lower.mp3');
 
 function updateProgress(percentage) {
-  document.getElementById("pbar_innerdiv").style.width=percentage + "%";
+  document.getElementById("pbar_innerdiv").style.width = percentage + "%";
 }
 
 function animateUpdate() {
   var now = new Date();
-  var timeDiff = now.getTime() - start.getTime();
-  var perc = 100 - Math.round((timeDiff/maxTime)*100);
+  var timeDiff = now.getTime() - g_start.getTime();
+  var perc = 100 - Math.round((timeDiff/g_maxTime)*100);
   if (perc > 0) {
     updateProgress(perc);
-    timeoutVar = setTimeout(animateUpdate, timeoutVal);
+    g_timeoutVar = setTimeout(animateUpdate, g_timeoutVal);
   } else {
     updateProgress(0);
     loop(); 
-    if (on_gif.length == 0) {
+    if (g_onGIF.length == 0) {
       $.get("http://localhost:5000/wiped/no_gif")
     } else {
-      $.get("http://localhost:5000/wiped/"+on_gif)
+      $.get("http://localhost:5000/wiped/"+g_onGIF)
     }
   }
 }
 
 // Variables for referencing the canvas and 2dcanvas context
-var canvas,ctx;
+var g_canvas, g_ctx;
 
 // Variables to keep track of the mouse position and left-button status 
-var mouseX,mouseY,mouseDown=0;
+var g_mouseX, g_mouseY, g_mouseDown=0;
 
 // Variables to keep track of the touch position
-var touchX,touchY;
+var g_touchX, g_touchY;
 
 // Draws a dot at a specific position on the supplied canvas name
 // Parameters are: A canvas context, the x position, the y position, the size of the dot
-function drawDot(ctx,x,y,size) {
+function drawDot(ctx, x, y, size) {
+
   // Let's use black by setting RGB values to 0, and 255 alpha (completely opaque)
-  r=255; g=0; b=0; a=255;
+  var r = 255; 
+  var g = 0; 
+  var b = 0; 
+  var a = 255;
 
   // Select a fill style
   ctx.fillStyle = "rgba("+r+","+g+","+b+","+(a/255)+")";
@@ -58,48 +67,48 @@ function drawDot(ctx,x,y,size) {
 
 // Keep track of the mouse button being pressed and draw a dot at current location
 function sketchpad_mouseDown() {
-  mouseDown=1;
-  drawDot(ctx,mouseX,mouseY,12);
+  g_mouseDown = 1;
+  drawDot(g_ctx, g_mouseX, g_mouseY, 12);
 }
 
 // Keep track of the mouse button being released
 function sketchpad_mouseUp(e) {
   // Update the mouse co-ordinates when released
   getMousePos(e);
-  console.log("Up at", mouseX, mouseY);
-  if (mouseX > canvas.width || mouseY > canvas.height || (mouseX < 65 && mouseY < 45)) {
+  console.log("Up at", g_mouseX, g_mouseY);
+  if (g_mouseX > g_canvas.width || g_mouseY > g_canvas.height || (g_mouseX < 65 && g_mouseY < 45)) {
     return;
   }
-  if (mouseX > 386 && mouseY < 20) {
+  if (g_mouseX > 386 && g_mouseY < 20) {
 
-    if (on_gif.length == 0) {
+    if (g_onGIF.length == 0) {
       $.get("http://localhost:5000/clearCanvas/no_gif")
     } else {
-      $.get("http://localhost:5000/clearCanvas/"+on_gif)
+      $.get("http://localhost:5000/clearCanvas/" + g_onGIF)
     }
-    mouseDown=0;
-    ctx.clearRect(0, 0, sketchpad.width, sketchpad.height);
-    if (on_gif === "") {
+    g_mouseDown = 0;
+    g_ctx.clearRect(0, 0, sketchpad.width, sketchpad.height);
+    if (g_onGIF === "") {
       draw_background();
     } else {
-      draw_example(on_gif);
+      draw_example(g_onGIF);
     }
     updateProgress(0);
-    clearTimeout(timeoutVar);
+    clearTimeout(g_timeoutVar);
     return;
   }
-  if (on_gif.length == 0) {
+  if (g_onGIF.length == 0) {
     $.get("http://localhost:5000/sketchpad_mouseUp/no_gif")
   } else {
-    $.get("http://localhost:5000/sketchpad_mouseUp/"+on_gif)
+    $.get("http://localhost:5000/sketchpad_mouseUp/"+g_onGIF)
   }
 
   // get current image
-  var myImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  var myImageData = g_ctx.getImageData(0, 0, g_canvas.width, g_canvas.height);
   var data = myImageData.data;
-  if (on_gif !== "") {
+  if (g_onGIF !== "") {
     // Try to assess correctness
-    var ref_data = reference_image.data;
+    var ref_data = g_referenceImage.data;
 
     // turn any "good" red to black
     for (var i = 0; i < data.length; i += 4) {
@@ -109,7 +118,8 @@ function sketchpad_mouseUp(e) {
 	data[i + 2] = 0; //255 - data[i + 2]; // blue
       }
     }
-    ctx.putImageData(myImageData, 0, 0);
+    g_ctx.putImageData(myImageData, 0, 0);
+
     // count up red and grey
     var red_count = 0;
     var grey_count = 0;
@@ -121,28 +131,28 @@ function sketchpad_mouseUp(e) {
 	grey_count += 1;
       }
     }
-    if (red_count < threshold && grey_count < threshold) {
+    if (red_count < g_threshold && grey_count < g_threshold) {
       console.log("Red/Grey", red_count, grey_count, "PASS");
       document.getElementById('gif').style.display = 'none';
-      on_gif = "";
+      g_onGIF = "";
     } else {
       console.log("Red/Grey", red_count, grey_count);
     }
   }
 
-  mouseDown=0;
-  clearTimeout(timeoutVar);
-  start = new Date();
+  g_mouseDown = 0;
+  clearTimeout(g_timeoutVar);
+  g_start = new Date();
   animateUpdate();
 }
 
 function loop() {
   /// clear canvas, set alpha and re-draw image
-  ctx.clearRect(0, 0, sketchpad.width, sketchpad.height);
-  if (on_gif === "") {
+  g_ctx.clearRect(0, 0, sketchpad.width, sketchpad.height);
+  if (g_onGIF === "") {
     draw_background();
   } else {
-    draw_example(on_gif);
+    draw_example(g_onGIF);
   }
 }
 
@@ -150,7 +160,7 @@ function draw_background() {
   var img = new Image();
   img.setAttribute('crossOrigin', 'anonymous');
   img.onload = function(){
-    ctx.drawImage(img,-3,0);
+    g_ctx.drawImage(img,-3,0);
   };
   img.src = 'assets/images/background.png' + '?' + new Date().getTime();
 }
@@ -158,12 +168,13 @@ function draw_background() {
 
 // Keep track of the mouse position and draw a dot if mouse button is currently pressed
 function sketchpad_mouseMove(e) { 
+
   // Update the mouse co-ordinates when moved
   getMousePos(e);
 
   // Draw a dot if the mouse button is currently being pressed
-  if (mouseDown==1) {
-    drawDot(ctx,mouseX,mouseY,12);
+  if (g_mouseDown==1) {
+    drawDot(g_ctx, g_mouseX, g_mouseY, 12);
   }
 }
 
@@ -173,21 +184,22 @@ function getMousePos(e) {
     e = event;
 
   if (e.offsetX) {
-    mouseX = e.offsetX;
-    mouseY = e.offsetY;
+    g_mouseX = e.offsetX;
+    g_mouseY = e.offsetY;
   }
   else if (e.layerX) {
-    mouseX = e.layerX;
-    mouseY = e.layerY;
+    g_mouseX = e.layerX;
+    g_mouseY = e.layerY;
   }
 }
 
 // Draw something when a touch start is detected
 function sketchpad_touchStart() {
+
   // Update the touch co-ordinates
   getTouchPos();
 
-  drawDot(ctx,touchX,touchY,12);
+  drawDot(g_ctx, g_touchX, g_touchY, 12);
 
   // Prevents an additional mousedown event being triggered
   event.preventDefault();
@@ -195,11 +207,13 @@ function sketchpad_touchStart() {
 
 // Draw something and prevent the default scrolling when touch movement is detected
 function sketchpad_touchMove(e) { 
+
   // Update the touch co-ordinates
   getTouchPos(e);
 
-  // During a touchmove event, unlike a mousemove event, we don't need to check if the touch is engaged, since there will always be contact with the screen by definition.
-  drawDot(ctx,touchX,touchY,12); 
+  // During a touchmove event, unlike a mousemove event, we don't need to check if the touch 
+  // is engaged, since there will always be contact with the screen by definition.
+  drawDot(g_ctx, g_touchX, g_touchY, 12); 
 
   // Prevent a scrolling action as a result of this touchmove triggering.
   event.preventDefault();
@@ -216,78 +230,85 @@ function getTouchPos(e) {
   if(e.touches) {
     if (e.touches.length == 1) { // Only deal with one finger
       var touch = e.touches[0]; // Get the information for finger #1
-      touchX=touch.pageX-touch.target.offsetLeft;
-      touchY=touch.pageY-touch.target.offsetTop;
+      g_touchX = touch.pageX - touch.target.offsetLeft;
+      g_touchY = touch.pageY - touch.target.offsetTop;
     }
   }
 }
 
 // Set-up the canvas and add our event handlers after the page has loaded
 function init() {
+
   // Get the specific canvas element from the HTML document
-  canvas = document.getElementById('sketchpad');
+  g_canvas = document.getElementById('sketchpad');
 
   // If the browser supports the canvas tag, get the 2d drawing context for this canvas
-  if (canvas.getContext)
-    ctx = canvas.getContext('2d');
+  if (g_canvas.getContext)
+    g_ctx = g_canvas.getContext('2d');
 
   // Check that we have a valid context to draw on/with before adding event handlers
-  if (ctx) {
-    // React to mouse events on the canvas, and mouseup on the entire document
-    canvas.addEventListener('mousedown', sketchpad_mouseDown, false);
-    canvas.addEventListener('mousemove', sketchpad_mouseMove, false);
+  if (g_ctx) {
+
+    // React to mouseup on the entire document
     window.addEventListener('mouseup', sketchpad_mouseUp, false);
 
+    // React to mouse events on the canvas
+    g_canvas.addEventListener('mousedown', sketchpad_mouseDown, false);
+    g_canvas.addEventListener('mousemove', sketchpad_mouseMove, false);
+
     // React to touch events on the canvas
-    canvas.addEventListener('touchstart', sketchpad_touchStart, false);
-    canvas.addEventListener('touchmove', sketchpad_touchMove, false);
+    g_canvas.addEventListener('touchstart', sketchpad_touchStart, false);
+    g_canvas.addEventListener('touchmove', sketchpad_touchMove, false);
   }
 }
 
 
 function show_gif(gif) {
   $.get("http://localhost:5000/show_gif/"+gif)
-  on_gif = gif;
+  g_onGIF = gif;
   document.getElementById('gif').style.display = "block";
-  document.getElementById('gif').innerHTML = '<div style="float:left;"><img onclick="dismiss_demo();" src="assets/images/'+gif+'.gif"></div><div style="float:left; margin-left:10px"><H1><i onclick="play_audio(\''+gif+'\');" class="fa fa-play"></i></H1></div></div><br style="clear:both">';
+  document.getElementById('gif').innerHTML = 
+    '<div style="float:left;"><img onclick="dismiss_demo();" src="assets/images/' + gif +
+    '.gif"></div><div style="float:left; margin-left:10px"><H1><i onclick="play_audio(\'' + gif +
+    '\');" class="fa fa-play"></i></H1></div></div><br style="clear:both">';
   draw_example(gif);
 }
 
 function dismiss_demo() {
   document.getElementById('gif').style.display = "none";
-  on_gif = "";
+  g_onGIF = "";
 }
 
 function play_audio(mp3) {
   $.get("http://localhost:5000/play_audio/"+mp3)
   console.log(mp3);
-  audioElement01.setAttribute('src','assets/images/'+ mp3+'.mp3');
-  audioElement01.play();
+  g_audioElement01.setAttribute('src', 'assets/audio/' + mp3 + '.mp3');
+  g_audioElement01.play();
 }
 
 function draw_example(gif){
   document.getElementById('gif').style.display = "block";
-  clearTimeout(timeoutVar);
+  clearTimeout(g_timeoutVar);
   updateProgress(0);
 
   var img = new Image();
   img.setAttribute('crossOrigin', 'anonymous');
   img.onload = function(){
-    ctx.drawImage(img,-3,-5);
-    reference_image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    g_ctx.drawImage(img,-3,-5);
+    g_referenceImage = g_ctx.getImageData(0, 0, g_canvas.width, g_canvas.height);
 
-    var ref_data = reference_image.data;
+    var ref_data = g_referenceImage.data;
 
-    ref_grey_count = 0;
+    g_refGreyCount = 0;
     for (var i = 0; i < ref_data.length; i += 4) {
       if (ref_data[i] !== 255 && ref_data[i] !== 0 ) { 
-        ref_grey_count += 1;
+        g_refGreyCount += 1;
       }
     }
-    threshold = 0.1 * ref_grey_count;
-    console.log("Ref", ref_grey_count, threshold);
+    g_threshold = 0.1 * g_refGreyCount;
+    console.log("Ref", g_refGreyCount, g_threshold);
   };
-  img.src = 'assets/images/'+gif+'_.gif' + '?' + new Date().getTime();
+  img.src = 'assets/images/' + gif + '_.gif' + '?' + new Date().getTime();
   $('html, body').animate({ scrollTop: 0 }, 'fast');
 }
 
