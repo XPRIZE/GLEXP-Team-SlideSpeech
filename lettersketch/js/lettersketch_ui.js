@@ -320,38 +320,48 @@ function draw_example(gif){
  * Save the contents of the canvas to a png file in the browser-determined
  * "Downloads" folder
  *--------------------------------------------------------------------------*/
-var g_savedImageCounter = 0;
 function saveCanvas() {
 
   // Try to recover new image
   var myImageData = g_ctx.getImageData(0, 0, g_canvas.width, g_canvas.height);
   var data = myImageData.data;
-  var ref_data = g_referenceImage.data;
+
+  // Convert the black pixels back to red
   for (var i = 0; i < data.length; i += 4) {
     if (data[i] == 0 && data[i+1] == 0 && data[i+2] == 0) {
       data[i] = 255;
       data[i+1] = 0;
       data[i+2] = 0;
-      console.log("ref_data = " + ref_data[i] + "," + ref_data[i+1] + "," + ref_data[i+2])
+    }
+  }
+
+  // Convert the non red pixels to white and transparent
+  for (var i = 0; i < data.length; i += 4) {
+    if (data[i] != 255) {
+      data[i] = 255;
+      data[i+1] = 255;
+      data[i+2] = 255;
+      //console.log("ref_data = " + ref_data[i] + "," + ref_data[i+1] + "," + ref_data[i+2])
     }
   }
   g_ctx.putImageData(myImageData, 0, 0);
 
-  // Save the canvas
-  console.log("Saving canvas");
+  // Save the canvas (taken from StackOverflow solution) 
+  //console.log("Saving canvas");
+  var now = new Date();
+  var fileName = "lettersketch_" + g_onGIF + "_" + now.getTime();
   var MIME_Type = "image/png";
   var imageURL = g_canvas.toDataURL(MIME_Type);
-  var fileName = "lettersketch_saved_" + g_savedImageCounter;
 
-  var dlLink = document.createElement('a');
-  dlLink.download = fileName;
-  dlLink.href = imageURL;
-  dlLink.dataset.downloadurl = [MIME_Type, dlLink.download, dlLink.href].join(':');
+  var hiddenLink = document.createElement('a');
+  hiddenLink.download = fileName;
+  hiddenLink.href = imageURL;
+  hiddenLink.dataset.downloadurl = 
+    [MIME_Type, hiddenLink.download, hiddenLink.href].join(':');
 
-  document.body.appendChild(dlLink);
-  dlLink.click();
-  document.body.removeChild(dlLink);
+  document.body.appendChild(hiddenLink);
+  hiddenLink.click();
+  document.body.removeChild(hiddenLink);
   
-  g_savedImageCounter++;
-  console.log( "Saved to " + fileName );
+  //console.log( "Saved to " + fileName );
 }
