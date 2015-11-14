@@ -12,12 +12,12 @@ Test of writing tools
 Python 2:
 
 ```
-  python lettersketch_looging.py
+  python lettersketch_logging.py
   python -m SimpleHTTPServer
 ```
 Python 3:
 ```
-  python lettersketch_looging.py
+  python lettersketch_logging.py
   python3 -m http.server 8000
 ```
 
